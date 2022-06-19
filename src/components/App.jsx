@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import ListItem from "./ListItem";
+import InputArea from "./InputArea";
 
 function App(){
   const [newTask, setTask] = useState("");
@@ -7,7 +8,7 @@ function App(){
 
   function saveTask(event){
     const task = event.target.value;
-    setTask(task)
+    setTask(task);
   }
 
   function saveList(){
@@ -16,13 +17,12 @@ function App(){
         ...prev,
         newTask
       ]
-    })
+    });
 
-    setTask("")
+    setTask("");
   }
 
   function deleteItem(id){
-    
     setList(prev => {
       return prev.filter((el, ind)=>{
         return ind !== id
@@ -38,13 +38,13 @@ function App(){
       <h1>TASK MANAGER</h1>
     </div>
 
-    <div className="form">
-      <input
-      onChange={saveTask}
-      value={newTask}
-      ></input>
-      <button onClick={saveList}><span>Add</span></button>
-    </div>
+    <InputArea
+    handleChange={saveTask}
+    addItem={saveList}
+    inputText={newTask}
+     />
+
+
     
       <ul>{list.map((el, ind) => 
         <ListItem 
