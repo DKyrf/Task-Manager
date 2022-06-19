@@ -1,60 +1,45 @@
-import React, {useState} from "react";
-import ListItem from "./ListItem";
+import React, { useState } from "react";
+import ToDoItem from "./ToDoItem";
 import InputArea from "./InputArea";
 
-function App(){
-  const [newTask, setTask] = useState("");
-  const [list, setList] = useState([]);
+function App() {
+  const [items, setItems] = useState([]);
 
-  function saveTask(event){
-    const task = event.target.value;
-    setTask(task);
-  }
-
-  function saveList(){
-    setList(prev=>{
-      return [
-        ...prev,
-        newTask
-      ]
+  function addItem(inputText) {
+    setItems(prevItems => {
+      return [...prevItems, inputText];
     });
-
-    setTask("");
   }
 
-  function deleteItem(id){
-    setList(prev => {
-      return prev.filter((el, ind)=>{
-        return ind !== id
-      })
-    })
-
+  function deleteItem(id) {
+    setItems(prevItems => {
+      return prevItems.filter((item, index) => {
+        return index !== id;
+      });
+    });
   }
 
-
-
-    return <div className="container">
-    <div className="heading">
-      <h1>TASK MANAGER</h1>
+  return (
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
+      <InputArea
+      onAdd={addItem} />
+      <div>
+        <ul>
+          {items.map((todoItem, index) => (
+            <ToDoItem
+              key={index}
+              id={index}
+              text={todoItem}
+              onChecked={deleteItem}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
-
-    <InputArea
-    handleChange={saveTask}
-    addItem={saveList}
-    inputText={newTask}
-     />
-
-
-    
-      <ul>{list.map((el, ind) => 
-        <ListItem 
-        id={ind}
-        key={ind}
-        element={el}
-        func={deleteItem}
-        />
-      )}</ul>
-    </div>
+  );
 }
 
-export default App
+export default App;
