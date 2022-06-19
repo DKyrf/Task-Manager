@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import ListItem from "./ListItem";
 
 function App(){
   const [newTask, setTask] = useState("");
@@ -20,6 +21,15 @@ function App(){
     setTask("")
   }
 
+  function deleteItem(id){
+    
+    setList(prev => {
+      return prev.filter((el, ind)=>{
+        return ind !== id
+      })
+    })
+
+  }
 
 
 
@@ -27,6 +37,7 @@ function App(){
     <div className="heading">
       <h1>TASK MANAGER</h1>
     </div>
+
     <div className="form">
       <input
       onChange={saveTask}
@@ -34,7 +45,15 @@ function App(){
       ></input>
       <button onClick={saveList}><span>Add</span></button>
     </div>
-    <ul>{list.map(el => <li>{el}</li>)}</ul>
+    
+      <ul>{list.map((el, ind) => 
+        <ListItem 
+        id={ind}
+        key={ind}
+        element={el}
+        func={deleteItem}
+        />
+      )}</ul>
     </div>
 }
 
