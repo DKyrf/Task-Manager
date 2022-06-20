@@ -5,9 +5,10 @@ import InputArea from "./InputArea";
 function App() {
   const [items, setItems] = useState([]);
 
-  function addItem(inputText) {
+
+  function addItem(input) {
     setItems(prevItems => {
-      return [...prevItems, inputText];
+      return [...prevItems, input];
     });
   }
 
@@ -25,7 +26,7 @@ function App() {
         <h1>To-Do List</h1>
       </div>
       <InputArea
-      onAdd={addItem} />
+      addChange={addItem} />
       <div>
         <ul>
           {items.map((todoItem, index) => (
